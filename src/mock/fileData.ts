@@ -69,6 +69,17 @@ path:'src',kind:'directory',children:[
     export default ExtraB`,
     path:'extraB.jsx'
   },{
+    filename:'extraC.jsx',
+    value:`   function ExtraC() {
+        console.log('init');
+        const [txt,setTxt] = useState(0)
+        return (
+          <div>this is loaded by ExtraC </div>
+        );
+      }
+    export default ExtraC`,
+    path:'extraC.jsx'
+  },{
     filename:'main.css',
     value:`.App-header{background:#dedede;font-size:28px}`,
     path:'main.css'

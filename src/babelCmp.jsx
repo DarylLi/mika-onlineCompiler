@@ -265,7 +265,6 @@ function App() {
     //   }).code;
     //   console.log(preput)
     const importCheckedCode = doCheckImport(textareaRef.current.value,'index_')
-  
     // transform-react-jsx已处理部分名称替换，单文件需独自处理
     let values = Array.from(mapSolute.values());
     try {

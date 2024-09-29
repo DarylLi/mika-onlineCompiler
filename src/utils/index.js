@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, memo } from "react";
 import { transform, registerPlugin } from "@babel/standalone";
 import { templates } from "@mock/fileData";
-
+window.memo = memo;
 window.useState = useState;
 var transferMap = new Map();
 let replaceMaps = new Map();
@@ -34,10 +34,11 @@ const matchFileName = (fileTrees, name) => {
 // import内容替换
 const doCheckImport = (str, nameprefix, checkedFile = templates) => {
   let result = str;
-  transform(result, {
+  let checked = transform(result, {
     presets: ["env"],
     plugins: [["transform-react-jsx"], ["confound", { prefix: nameprefix }]],
   }).code;
+
   // jsx文件import 检索
   let resultArr = [...result.matchAll(/import.*from.*;/g)];
   // css 文件import检索
@@ -83,7 +84,6 @@ const doCheckImport = (str, nameprefix, checkedFile = templates) => {
         let importTarget = mr[0].replace("import", "").split("from")[0].trim();
         // 混淆引用名，防止单输出文件重名引用
         let replaceExportTarget = transferMap.get(importTarget) || importTarget;
-
         // 源文件export变量名
         const orginExportNameArr = replaceCode.split("export default");
         replaceCode =
@@ -187,8 +187,8 @@ export const getCodeTransform = (codeTxt, checkedFiles, rewrite = false) => {
     );
     // 引入文件重名检测
     if (duplicateList.length > 1) {
-      let reCode = `let offList=[];let doDuplicateStr = importCheckedCode.replace(/${duplicateList[0].targetKey}.*()/g,(match,offset)=>{match.includes('()')&&offList.push(match);return 'D_'+offList.length+'_'+match});importCheckedCode=doDuplicateStr`;
-      // console.log(reCode)
+      // let reCode = `let offList=[];let doDuplicateStr = importCheckedCode.replace(/${duplicateList[0].targetKey}.*()/g,(match,offset)=>{match.includes('()')&&offList.push(match);return 'D_'+offList.length+'_'+match});importCheckedCode=doDuplicateStr`;
+      let reCode = rustLib.getDuplicatedCode(duplicateList[0].targetKey);
       eval(reCode);
       // let testCode = `let offList=[];let okStrArr = importCheckedCode.matchAll(/${duplicateList[0].targetKey}.*/g);console.log([...okStrArr])`;
       // eval(testCode)

@@ -65,3 +65,13 @@ fn get_css_compiled_file(css_name: &str, css_file: &str) -> String {
 pub fn getCompiledCssCode(css_name: &str, css_file: &str) -> String {
     String::from(get_css_compiled_file(css_name, css_file))
 }
+
+fn duplicate_check(dp_str: &str) -> String {
+    let result_code = format!("let offList=[];let doDuplicateStr = importCheckedCode.replace(/{}.*()/g,(match,offset)=>{{match.includes('()')&&offList.push(match);return 'D_'+offList.length+'_'+match}});importCheckedCode=doDuplicateStr",dp_str);
+    result_code
+}
+
+#[wasm_bindgen]
+pub fn getDuplicatedCode(dp_str: &str) -> String {
+    String::from(duplicate_check(dp_str))
+}
