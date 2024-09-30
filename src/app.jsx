@@ -11,3 +11,5 @@ root.render(
     // <BabelCmp/>
     <PageEntry/>
 );
+
+export default root;

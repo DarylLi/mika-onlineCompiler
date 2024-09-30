@@ -108,6 +108,7 @@ const doCheckImport = (str, nameprefix, checkedFile = templates) => {
     // return {[curKey]:`${nameprefix}${curKey}`}
   });
   try {
+    // 预编译处理名称引用
     const output = transform(result, {
       presets: ["env"],
       plugins: [["transform-react-jsx"]],
@@ -200,7 +201,6 @@ export const getCodeTransform = (codeTxt, checkedFiles, rewrite = false) => {
     presets: ["env"],
     plugins: [["transform-react-jsx"]],
   }).code;
-
   const afterCode = transform(output, {
     presets: ["env"],
     plugins: ["transConfound"],
