@@ -11,6 +11,7 @@ const config = {
   // entry: [path.join(__dirname,'/src/main.js'),path.join(__dirname,'/src/extra.js'),path.join(__dirname,'/src/haha.js')],
   entry: {
     app: path.join(__dirname, "/src/app.jsx"),
+    root: path.join(__dirname, "/src/lib.jsx"),
   },
   output: {
     path: path.join(__dirname, "/build"),

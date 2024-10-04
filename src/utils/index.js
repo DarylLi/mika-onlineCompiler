@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo } from "react";
+import { useState, memo } from "react";
 import { transform, registerPlugin } from "@babel/standalone";
 import { templates } from "@mock/fileData";
 window.memo = memo;
@@ -212,13 +212,6 @@ export const getCodeTransform = (codeTxt, checkedFiles, rewrite = false) => {
   );
   try {
     eval(targetCode);
-    // rewrite
-    //   ? eval(
-    //       `var exports={};const { useRef, useState } = React;${afterCode};document.getElementById('previewFrame').innerHTML='';let targetRoot = document.createElement('div');targetRoot.setAttribute('id','previewContent');document.getElementById('previewFrame').appendChild(targetRoot);window._rootHandler = ReactDOM.createRoot(document.getElementById('previewContent'));window._rootHandler.render(React.createElement(_default))`
-    //     )
-    //   : eval(
-    //       `var exports={};const { useRef, useState } = React;${afterCode};let targetRoot = document.createElement('div');targetRoot.setAttribute('id','previewContent');document.getElementById('previewFrame').appendChild(targetRoot);window._rootHandler = ReactDOM.createRoot(document.getElementById('previewContent'));window._rootHandler.render(React.createElement(_default));`
-    //     );
   } catch (err) {
     console.log(err);
   }

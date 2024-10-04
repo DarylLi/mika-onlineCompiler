@@ -7,6 +7,7 @@ import { editStore } from "@store/index";
 import { Spin } from 'antd';
 import './main.scss'
 
+console.log(RightView)
 function PageEntry() {
   const [stat, setStat] = useState(1);
   const [code, setCode] = useState('');

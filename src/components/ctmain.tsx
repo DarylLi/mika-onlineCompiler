@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import MonacoEditor from "react-monaco-editor";
 import { editStore } from "@store/index";
 import { observer } from "mobx-react-lite";
@@ -13,7 +13,6 @@ import { toJS } from "mobx";
 function MainEditor() {
   // let cursocket: any = null;
   const [code, setCode] = useState("");
-  const cursocket: any = useRef(null);
   // const [cursocket, setCurSocket] = useState(null as any);
   const editorDidMount = (editor: any, monaco: any) => {
     editor.focus();
