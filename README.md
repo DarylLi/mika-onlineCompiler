@@ -11,6 +11,9 @@ use mika-editor as component:
 
 1.  for webpack
 
+warn: if your config set of output path is not "/build",you should follow cdn config, else just use esm way to import
+
+======= using by cdn =======
 step 1: import lib:
 
 1.1: add static lib in your html file
@@ -32,7 +35,9 @@ step 1: import lib:
 step 2: render component by using init function:
 
 <!--
-        renderComponents.renderComponents(document.getElementById("editor")//setting your target dom);
+        import mikaEditorInstance from 'mika-editor-fe';
+
+        mikaEditorInstance.renderComponents(document.getElementById("editor")//setting your target dom);
     -->
 
 2.  you could also load dynamic fetch method to import & use this lib:
