@@ -57,6 +57,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-monaco-editor": "^0.56.0",
+    "react-router-dom": "^6.26.2",
     "sass": "^1.77.8",
     "sass-loader": "^16.0.0",
     "socket.io": "^4.7.5",

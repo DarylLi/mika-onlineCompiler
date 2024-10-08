@@ -1,7 +1,124 @@
+@font-face {
+	font-family: "IBM Plex Sans Roman";
+	src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85648/IBMPlexSansVar-Roman.ttf");
+}
+
+
 html, body,#root{
     height: 100%;
     margin: 0px !important;
 }
+.switchIcon{
+    position: fixed;
+    width: auto;
+    transform: translate(-50%,0);
+    left: 50%;
+    height: 20px;
+    top: -5px;
+    cursor: pointer;
+    transition: all .3s;
+    font-weight: 100;
+    font-size: 12px;
+    font-variation-settings: 'wght' 10, 'wdth' 12;
+    z-index: 10;
+    color: #5c95f6;
+    --word-center: calc((var(--word-total) - 1) / 2);
+    /* The center character index */
+    --char-center: calc((var(--char-total) - 1) / 2);
+    /* The center character index */
+    --line-center: calc((var(--line-total) - 1) / 2);
+
+}
+.switchIcon .word{
+    --word-percent: calc(var(--word-index) / var(--word-total));
+    --line-percent: calc(var(--line-index) / var(--line-total));
+    display: inline-block;
+}
+.switchIcon .char {
+	--delay: calc((var(--char-index) + 1) * 400ms);
+	animation: breathe 4000ms infinite both;
+	animation-delay: var(--delay);
+
+}
+.switchIcon .char {
+    --word-center: calc((var(--word-total) - 1) / 2);
+    /* The center character index */
+    --char-center: calc((var(--char-total) - 1) / 2);
+    /* The center character index */
+    --line-center: calc((var(--line-total) - 1) / 2);
+    font-family: "IBM Plex Sans Roman", Times;
+    /* Percent (0-1) of the char's position */
+    --char-percent: calc(var(--char-index) / var(--char-total));
+  
+    /* Offset from center, positive & negative */
+    --char-offset: calc(var(--char-index) - var(--char-center));
+  
+    /* Absolute distance from center, only positive */
+    --distance: calc(
+       (var(--char-offset) * var(--char-offset)) / var(--char-center)
+    );
+  
+    /* Distance from center where -1 is the far left, 0 is center, 1 is far right */
+    --distance-sine: calc(var(--char-offset) / var(--char-center));
+  
+    /* Distance from center where 1 is far left/far right, 0 is center */
+    --distance-percent: calc((var(--distance) / var(--char-center)));
+  }
+.switchIcon .char::before,
+.switchIcon .char::after{
+    content: attr(data-char);
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    transition: inherit;
+    user-select: none;
+}
+@keyframes breathe {
+    0% {
+      font-variation-settings: 'wght' 130, 'wdth' 42;
+      font-size: 14px;
+    }
+    60% {
+      font-variation-settings: 'wght' 117, 'wdth' 44;
+      font-size: 18px;
+    }
+    
+    100% {
+      font-variation-settings: 'wght' 130, 'wdth' 42;
+      font-size: 14px;
+    }
+  }
+
+.mika-layout{
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    top: -120px;
+    transition: all .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #5c95f6;
+    z-index: 10;
+    a,::marker{
+        color: #fbe2f0!important;
+    }
+    nav{
+        width: inherit;
+    }
+    .mika-nav{
+        .active{
+            a,::marker{
+                color: #fff!important;
+            }
+        }
+    }
+}
+.mika-layout.show-layout{
+    top: 0px;
+}
+
 .App{
     height: inherit;
     display: flex;

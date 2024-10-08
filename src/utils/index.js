@@ -1,6 +1,7 @@
 import { useState, memo } from "react";
 import { transform, registerPlugin } from "@babel/standalone";
 import { templates } from "@mock/fileData";
+import { matchFileName } from "./commonUtils";
 window.memo = memo;
 window.useState = useState;
 var transferMap = new Map();
@@ -20,17 +21,7 @@ const renderRustLib = () => {
   }
 };
 renderRustLib();
-const matchFileName = (fileTrees, name) => {
-  let result = null;
-  //   匹配目录名称相符的第一个文件
-  result = fileTrees.find((e) => name.includes(e.filename));
-  if (result) return result;
-  fileTrees.forEach((tree) => {
-    result = tree.children ? matchFileName(tree.children, name) : null;
-    if (result) return result;
-  });
-  return result;
-};
+
 // import内容替换
 const doCheckImport = (str, nameprefix, checkedFile = templates) => {
   let result = str;
@@ -40,9 +31,10 @@ const doCheckImport = (str, nameprefix, checkedFile = templates) => {
   }).code;
 
   // jsx文件import 检索
-  let resultArr = [...result.matchAll(/import.*from.*;/g)];
+  let resultArr = [...result.matchAll(/import.*from.*(;|\s)/g)];
+  // console.log(resultArr);
   // css 文件import检索
-  let cssArr = [...result.matchAll(/import.*(.css)("|');/g)];
+  let cssArr = [...result.matchAll(/import.*(.css)("|')(;|\s)/g)];
   // 替换import css内容为相应代码段
   cssArr.length > 0 &&
     cssArr.forEach((css, index) => {
@@ -94,7 +86,7 @@ const doCheckImport = (str, nameprefix, checkedFile = templates) => {
                 `let ${replaceExportTarget} =`
               );
 
-        result = result.replace(mr[0], replaceCode);
+        result = result.replace(mr[0], `${replaceCode};`);
       }
       // 不存在则先注释处理
       else {

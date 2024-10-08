@@ -1,7 +1,7 @@
 import React from "react";
-import Directory from '@components/reactEditor/lftdir';
-import MainEditor from '@components/reactEditor/ctmain';
-import RightView from '@components/reactEditor/rtview'
+import Directory from '@components/vueEditor/lftdir';
+import MainEditor from '@components/vueEditor/ctmain';
+import RightView from '@components/vueEditor/rtview'
 
 class EditorRoot extends React.Component{
     render(){
