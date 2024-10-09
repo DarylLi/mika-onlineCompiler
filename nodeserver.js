@@ -5,7 +5,7 @@ const port = 8100;
 app.get("/", (req, res) => {
   //   res.send("Hello World!");
   //   res.sendFile(__dirname + "/build/index.html");
-  res.sendFile(__dirname + "/build/test.html");
+  res.sendFile(__dirname + "/build/index.html");
 });
 app.get("/*.js", (req, res) => {
   res.sendFile(__dirname + `/build/${req.url}`);

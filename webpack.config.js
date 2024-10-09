@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const WebpackDevServer = require("webpack-dev-server");
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const webpack = require("webpack");
 const config = {
@@ -93,6 +94,10 @@ const config = {
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "."),
     }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "server",
+      openAnalyzer: true,
+    }),
   ],
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx", ".wasm"],
@@ -103,6 +108,29 @@ const config = {
       "@utils": path.resolve(__dirname, "src/utils/"),
       "@server": path.resolve(__dirname, "src/server/"),
       "@pkg": path.resolve(__dirname, "pkg/"),
+    },
+  },
+  optimization: {
+    splitChunks: {
+      chunks: "async",
+      minSize: 2000,
+      minRemainingSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      enforceSizeThreshold: 50000,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
     },
   },
   experiments: {

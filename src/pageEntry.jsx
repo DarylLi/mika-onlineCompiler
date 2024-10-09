@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import Directory from '@components/lftdir';
-import MainEditor from '@components/ctmain';
-import RightView from '@components/rtview'
+import Directory from '@components/reactEditor/lftdir';
+import MainEditor from '@components/reactEditor/ctmain';
+import RightView from '@components/reactEditor/rtview'
 import { observer } from "mobx-react";
 import { editStore } from "@store/index";
 import { Spin } from 'antd';
