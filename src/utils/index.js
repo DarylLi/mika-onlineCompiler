@@ -163,6 +163,15 @@ export const getCodeTransform = (codeTxt, checkedFiles, rewrite = false) => {
   // css引入前置标签刷新
 
   let refreshCode = rustLib.getCompiledCode("refresh_css");
+  // interval && timeout 释放
+  window._editorInnerInterval.length > 0 &&
+    window._editorInnerInterval.forEach((inner) => {
+      window.clearInterval(inner);
+    });
+  window._editorInnerTimeout.length > 0 &&
+    window._editorInnerTimeout.forEach((inner) => {
+      window.clearTimeout(inner);
+    });
   // `let _refreshCssCode_ = document.getElementById("innerCssCode")||document.createElement("div");_refreshCssCode_.setAttribute('id','innerCssCode');_refreshCssCode_.innerHTML='';document.getElementById("root").appendChild(_refreshCssCode_);`;
   const importCheckedCode = doCheckImport(
     `${refreshCode}${codeTxt}`,
@@ -278,5 +287,24 @@ export function doThrottleChange(time, fn, ...args) {
       currentTrottleInstance.needRefresh = false;
       fn.apply(this, totalArgs);
     }
+  };
+}
+
+//auto getinstance of interval & timeout
+
+export function registryIntervalTimeout() {
+  const _setTimeout = window.setTimeout;
+  const _setInterval = window.setInterval;
+  window._editorInnerInterval = [];
+  window._editorInnerTimeout = [];
+  window.setTimeout = function (...args) {
+    const curTimeout = _setTimeout(...args);
+    window._editorInnerTimeout.push(curTimeout);
+    return curTimeout;
+  };
+  window.setInterval = function (...args) {
+    const curInterval = _setInterval(...args);
+    window._editorInnerInterval.push(curInterval);
+    return curInterval;
   };
 }

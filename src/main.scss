@@ -92,7 +92,7 @@ html, body,#root{
 
 .mika-layout{
     position: fixed;
-    width: 100%;
+    width: 180px;
     height: 60px;
     top: -120px;
     transition: all .3s;
@@ -101,6 +101,9 @@ html, body,#root{
     align-items: center;
     background-color: #5c95f6;
     z-index: 10;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    border-radius: 5px;
     a,::marker{
         color: #fbe2f0!important;
     }
@@ -137,16 +140,64 @@ html, body,#root{
     }
     .mika-mona-center-editor{
         flex: 1;
+        margin-right: 210px;
     }
     .mika-mona-right-view{
-        width: 400px;
+        padding: 5px;
+        position:absolute;
+        right:0px;
+        width: 200px;
+        height: calc(100% - 30px);
         margin-left: 10px;
         background-color: #fff;
         border-radius: 20px;
+        border-left: 5px solid #d6e0f9;
+        box-sizing: content-box;
+        z-index: 12;
         iframe{
             width: 100%;
             height: 100%;
         }
+    }
+    .mika-mona-right-view::before{
+        -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-name: breathelight;
+        -webkit-animation-duration: 1500ms;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: alternate;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        content: "";
+        width: 4px;
+        height: calc(100% - 32px);
+        z-index: 0;
+        border-radius: 50px;
+        position: absolute;
+        left: -5px;
+        z-index: 0;
+        top: 50%;
+        transform: translate(0px, -50%);
+    }
+    .mika-drag-bar{
+        position: absolute;
+        width: 12px;
+        height: calc(100% - 30px);
+        top: 50%;
+        transform: translate(0px, -50%);
+        right: 210px;
+        z-index: 15;
+        cursor: pointer;
+    }
+}
+@-webkit-keyframes breathelight {
+    0% {
+        opacity: .4;
+        box-shadow: 0 1px 2px rgba(0, 147, 223, 0.4), 0 1px 1px rgba(0, 147, 223, 0.1) inset;
+    }
+
+    100% {
+        opacity: .8;
+        border: 1px solid rgba(59, 235, 235, 0.7);
+        box-shadow: 0 1px 30px #0093df, 0 1px 20px #0093df inset;
     }
 }
 .mika-out-log-content{

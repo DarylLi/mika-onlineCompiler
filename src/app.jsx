@@ -8,10 +8,11 @@ import BabelCmp from './babelCmp';
 import './utils/indexVue'
 import { BrowserRouter } from 'react-router-dom';
 import './main.scss'
+import { registryIntervalTimeout } from './utils';
 
-
+//防止编辑器内写入interval或timeout因重复保存刷新造成内存泄漏
+registryIntervalTimeout();
 const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log(root);
 root.render(
     // <BabelCmp/>
     <BrowserRouter>

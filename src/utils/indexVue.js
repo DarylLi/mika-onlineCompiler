@@ -71,6 +71,15 @@ const VueImportReplacement = async (name, str, checkedFile) => {
 };
 let currentApp = null;
 export const loadVueTemplate = (entryFile, templates, isupdate) => {
+  // interval && timeout 释放
+  window._editorInnerInterval.length > 0 &&
+    window._editorInnerInterval.forEach((inner) => {
+      window.clearInterval(inner);
+    });
+  window._editorInnerTimeout.length > 0 &&
+    window._editorInnerTimeout.forEach((inner) => {
+      window.clearTimeout(inner);
+    });
   !isupdate &&
     Promise.all([
       loadAsyncCdn("https://unpkg.com/vue@3.5.11/dist/vue.global.js"),
