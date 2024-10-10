@@ -6,6 +6,7 @@ import { observer } from "mobx-react";
 import { editStore } from "@store/index";
 import { Spin } from 'antd';
 import './main.scss'
+import _ from 'lodash'
 
 console.log(RightView)
 function PageEntry() {

@@ -28,7 +28,7 @@ function RightView() {
     <>
       <div
         className="mika-drag-bar"
-        onDrag={doThrottleChange(200, holdDrag)}
+        onDrag={doThrottleChange(50, holdDrag)}
         onDragEnd={doRightChange}
         draggable="true"
         ref={dragRef}

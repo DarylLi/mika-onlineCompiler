@@ -5,8 +5,10 @@ const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 const rspack = require("@rspack/core");
 const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { defineConfig } = require("@rspack/cli");
+const terserPlugin = require("terser-webpack-plugin");
 
-const config = {
+const config = defineConfig({
   mode: "development",
   // entry: [path.join(__dirname,'/src/main.js'),path.join(__dirname,'/src/extra.js'),path.join(__dirname,'/src/haha.js')],
   entry: {
@@ -85,10 +87,10 @@ const config = {
         removeAttributeQuotes: true,
       },
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "server",
-      openAnalyzer: true,
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: "server",
+    //   openAnalyzer: true,
+    // }),
     new CleanWebpackPlugin(),
     new rspack.HotModuleReplacementPlugin(),
     new MonacoWebpackPlugin({
@@ -99,6 +101,20 @@ const config = {
       crateDirectory: path.resolve(__dirname, "."),
     }),
   ],
+  devServer: {
+    open: true,
+    port: "9000",
+    allowedHosts: [
+      "host.com",
+      "subdomain.host.com",
+      "subdomain2.host.com",
+      "host2.com",
+    ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new terserPlugin()],
+  },
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx", ".wasm"],
     alias: {
@@ -113,7 +129,12 @@ const config = {
   experiments: {
     asyncWebAssembly: true,
   },
-};
+  externals: [
+    {
+      lodash: "_",
+    },
+  ],
+});
 
 // const devserver = new WebpackDevServer({
 //   headers: { 'Access-Control-Allow-Origin': '*' },
